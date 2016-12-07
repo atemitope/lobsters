@@ -14,7 +14,6 @@ class CommentsController < ApplicationController
     story.is_gone?
       return render :text => "can't find story", :status => 400
     end
-
     comment = story.comments.build
     comment.comment = params[:comment].to_s
     comment.user = @user
@@ -47,6 +46,7 @@ class CommentsController < ApplicationController
     end
 
     if comment.valid? && params[:preview].blank? && comment.save
+      Notifier.notify_author(comment, CommentNotifier)
       comment.current_vote = { :vote => 1 }
 
       render :partial => "comments/postedreply", :layout => false,
@@ -298,8 +298,18 @@ class CommentsController < ApplicationController
     #end
   end
 
-private
 
+#check for where gonna be posted
+#check comment is parent
+#get info for comment author
+#get info for post author
+#get comment info
+#trigger mailer and compose message
+
+private
+  def notify_author()
+    #code
+  end
   def preview(comment)
     comment.previewing = true
     comment.is_deleted = false # show normal preview for deleted comments

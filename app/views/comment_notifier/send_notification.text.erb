@@ -1,0 +1,7 @@
+Hi <%= @post_author.username %>,
+  <%= @comment_author.username %> just added the comment below to your post titled "<%= @post.title %>" on <%= Rails.application.name %>
+
+
+  <%= word_wrap(@comment, :line_width => 72).gsub(/\n/, "\n  ") %>
+
+Login to your account here <%= "htttp://#{Rails.application.domain}/login"%> to respond to this comment
